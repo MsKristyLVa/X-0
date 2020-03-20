@@ -45,6 +45,7 @@ class Board {
 class Game {
 
     init(status, board) {
+        this.myClick = 6;
         this.status = status;
         this.board = board;
     }
@@ -58,6 +59,16 @@ class Game {
             this.status.setStatusStopped();
             this.sayWonPhrase();
             return;
+        }
+        if (!this.myClick) {
+            this.gameTableElement.appendChild(te);
+            for (let col = 0; col < 3; col++) {
+                let td = document.createElement('td');
+                td.dataset.row = row.toString();
+                td.dataset.col = col.toString();
+                tr.appendChild(td);
+                return;
+            }
         }
         this.status.togglePhase();
     }
