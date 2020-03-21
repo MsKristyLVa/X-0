@@ -61,13 +61,9 @@ class Game {
             return;
         }
         if (!this.myClick) {
-            this.gameTableElement.appendChild(te);
-            for (let col = 0; col < 3; col++) {
-                let td = document.createElement('td');
-                td.dataset.row = row.toString();
-                td.dataset.col = col.toString();
-                tr.appendChild(td);
-                return;
+            this.status.setStatusStopped();
+            alert("Ничья");
+            return;
             }
         }
         this.status.togglePhase();
