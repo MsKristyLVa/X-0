@@ -65,7 +65,7 @@ class Game {
             alert("Ничья");
             return;
             }
-        }
+        this.myClick--;
         this.status.togglePhase();
     }
 
