@@ -43,30 +43,36 @@ class Board {
     }
 }
 class Game {
+    constructor() {
+        this.clickCount = 0;
+        this.clickToFiLlBoard = 9;
+    }
 
     init(status, board) {
-        this.myClick = 6;
         this.status = status;
         this.board = board;
     }
 
     cellClickHandler(event) {
         if (!this.isCorrectClick(event)) {
-            return;
+            return
         }
         this.board.fillCell(event);
+        this.clickCount++
         if (this.hasWon()) {
             this.status.setStatusStopped();
             this.sayWonPhrase();
             return;
         }
-        if (!this.myClick) {
-            this.status.setStatusStopped();
-            alert("Ничья");
+        if (this.clickCount == this.clickToFiLlBoard) {
+            this.sayDeatHeatPhrase();
             return;
-            }
-        this.myClick--;
+        }
         this.status.togglePhase();
+    }
+
+    sayDeatHeatPhrase() {
+        alert('Ничья');
     }
 
     isCorrectClick(event) {
