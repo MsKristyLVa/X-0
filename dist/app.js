@@ -72,7 +72,7 @@ class Game {
     }
 
     sayDeatHeatPhrase() {
-        alert('Ничья');
+        alert('Ничья_Ничья');
     }
 
     isCorrectClick(event) {
