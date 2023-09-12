@@ -7,7 +7,7 @@ class Board {
         this.game = game;
         this.status = status;
     }
-    
+
     renderMap() {
         for (let row = 0; row < 3; row++) {
             const tr = document.createElement('tr');
@@ -28,7 +28,7 @@ class Board {
     isClickByCell(event) {
         return event.target.tagName === 'TD';
     }
-    
+
     isCellEmpty(event) {
         let row = +event.target.dataset.row;
         let col = +event.target.dataset.col;
