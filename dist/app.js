@@ -26,7 +26,7 @@ class Board {
     }
 
     isClickByCell(event) {
-        return event.target.tagName == 'TD';
+        return event.target.tagName === 'TD';
     }
     
     isCellEmpty(event) {
@@ -40,6 +40,10 @@ class Board {
         let col = +event.target.dataset.col;
         this.status.mapValues[row][col] = this.status.phase;
         event.target.textContent = this.status.phase;
+    }
+
+    clearBoard() {
+        this.gameTableElement.innerHTML = '';
     }
 }
 class Game {
@@ -64,7 +68,7 @@ class Game {
             this.sayWonPhrase();
             return;
         }
-        if (this.clickCount == this.clickToFiLlBoard) {
+        if (this.clickCount === this.clickToFiLlBoard) {
             this.sayDeatHeatPhrase();
             return;
         }
@@ -72,7 +76,11 @@ class Game {
     }
 
     sayDeatHeatPhrase() {
-        alert('Ничья');
+        let confirmRestart = confirm('Ничья');
+
+        if (confirmRestart) {
+            this.restartGame();
+        }
     }
 
     isCorrectClick(event) {
@@ -80,16 +88,16 @@ class Game {
     }
 
     hasWon() {
-        return this.isLineWon({ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }) ||
-               this.isLineWon({ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }) ||
-               this.isLineWon({ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }) ||
+        return this.isLineWon({x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}) ||
+            this.isLineWon({x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}) ||
+            this.isLineWon({x: 0, y: 2}, {x: 1, y: 2}, {x: 2, y: 2}) ||
 
-               this.isLineWon({ x: 0, y: 0 }, { x: 0, y: 1 }, { x: 0, y: 2 }) ||
-               this.isLineWon({ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 1, y: 2 }) ||
-               this.isLineWon({ x: 2, y: 0 }, { x: 2, y: 1 }, { x: 2, y: 2 }) ||
+            this.isLineWon({x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}) ||
+            this.isLineWon({x: 1, y: 0}, {x: 1, y: 1}, {x: 1, y: 2}) ||
+            this.isLineWon({x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2}) ||
 
-               this.isLineWon({ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }) ||
-               this.isLineWon({ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 0 });
+            this.isLineWon({x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}) ||
+            this.isLineWon({x: 0, y: 2}, {x: 1, y: 1}, {x: 2, y: 0});
     }
 
     isLineWon(a, b, c) {
@@ -99,13 +107,25 @@ class Game {
 
     sayWonPhrase() {
         let figure = this.status.phase === 'X' ? 'Крестики' : 'Нолики';
-        alert(`${figure} выиграли!`);
+        let confirmRestart = confirm(`${figure} выиграли!`);
+
+        if (confirmRestart) {
+            this.restartGame();
+        }
     }
 
+    restartGame() {
+        this.board.clearBoard();
+        start();
+    }
 }
 
 
 window.addEventListener('load', function() {
+    this.start();
+});
+
+function start() {
     const game = new Game();
     const board = new Board();
     const status = new Status();
@@ -115,7 +135,7 @@ window.addEventListener('load', function() {
 
     board.renderMap();
     board.initEventHandlers();
-});
+}
 class Status {
     constructor() {
         this.status = 'playing';

@@ -26,7 +26,7 @@ class Board {
     }
 
     isClickByCell(event) {
-        return event.target.tagName == 'TD';
+        return event.target.tagName === 'TD';
     }
     
     isCellEmpty(event) {
@@ -40,5 +40,9 @@ class Board {
         let col = +event.target.dataset.col;
         this.status.mapValues[row][col] = this.status.phase;
         event.target.textContent = this.status.phase;
+    }
+
+    clearBoard() {
+        this.gameTableElement.innerHTML = '';
     }
 }
