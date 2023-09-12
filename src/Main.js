@@ -1,4 +1,8 @@
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
+    this.start();
+});
+
+function start() {
     const game = new Game();
     const board = new Board();
     const status = new Status();
@@ -8,4 +12,4 @@ window.addEventListener('load', function() {
 
     board.renderMap();
     board.initEventHandlers();
-});
+}
